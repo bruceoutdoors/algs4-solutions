@@ -9,7 +9,7 @@ If you intend to use Netbeans as well, I recommend installing the [checkstyle](h
 
 ## Part I
  1. Percolation (Union-find) - Score: **86%**
- 2. Randomized Queues and Deques (Queue and Stack) - _not completed_
+ 2. Randomized Queues and Deques (Queue and Stack) - Score: **99%**
  3. Pattern Recognition (Sort) - _not completed_
  4. 8 Puzzle (Priority Queues) - _not completed_
  5. Kd-Tree (Balanced Search Trees) - _not completed_
