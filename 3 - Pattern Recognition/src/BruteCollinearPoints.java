@@ -26,26 +26,28 @@ public class BruteCollinearPoints {
                 throw new java.lang.NullPointerException();
             }
         }
+        
+        Point[] pointsCopy = points.clone();
 
         ArrayList<LineSegment> segs = new ArrayList<>();
-        Quick.sort(points);
+        Quick.sort(pointsCopy);
 
         // all points must be unique:
-        for (int i = 0; i < points.length - 1; i++) {
-            if (points[i].compareTo(points[i + 1]) == 0) {
+        for (int i = 0; i < pointsCopy.length - 1; i++) {
+            if (pointsCopy[i].compareTo(pointsCopy[i + 1]) == 0) {
                 throw new java.lang.IllegalArgumentException();
             }
         }
 
-        for (int i = 0; i < points.length; i++) {
-            for (int j = 1; j < points.length; j++) {
-                for (int k = 2; k < points.length; k++) {
-                    for (int l = 3; l < points.length; l++) {
+        for (int i = 0; i < pointsCopy.length; i++) {
+            for (int j = 1; j < pointsCopy.length; j++) {
+                for (int k = 2; k < pointsCopy.length; k++) {
+                    for (int l = 3; l < pointsCopy.length; l++) {
                         if (i < j && j < k && k < l) {
-                            Point p1 = points[i];
-                            Point p2 = points[j];
-                            Point p3 = points[k];
-                            Point p4 = points[l];
+                            Point p1 = pointsCopy[i];
+                            Point p2 = pointsCopy[j];
+                            Point p3 = pointsCopy[k];
+                            Point p4 = pointsCopy[l];
 
                             double s1 = p1.slopeTo(p2);
                             if (p1.slopeTo(p3) == s1
@@ -68,7 +70,7 @@ public class BruteCollinearPoints {
 
     public LineSegment[] segments() // the line segments
     {
-        return segmentsArr;
+        return segmentsArr.clone();
     }
 
     public static void main(String[] args) {

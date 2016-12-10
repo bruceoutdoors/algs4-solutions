@@ -10,12 +10,12 @@
  *
  *****************************************************************************
  */
-
 import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
+import java.util.Objects;
 
 public class Point implements Comparable<Point> {
-    
+
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
 
@@ -66,15 +66,15 @@ public class Point implements Comparable<Point> {
         if (that.x == this.x && that.y == this.y) {
             return Double.NEGATIVE_INFINITY;
         }
-        
+
         if (that.y == this.y) {
-            return Double.POSITIVE_INFINITY;
-        }
-        
-        if (that.x == this.x) {
             return 0;
         }
-        
+
+        if (that.x == this.x) {
+            return Double.POSITIVE_INFINITY;
+        }
+
         return (double) (that.y - this.y) / (double) (that.x - this.x);
     }
 
@@ -93,12 +93,12 @@ public class Point implements Comparable<Point> {
         if (that.x == this.x && that.y == this.y) {
             return 0;
         }
-        
+
         if (this.y < that.y
                 || (this.y == that.y && this.x < that.x)) {
             return -1;
-        }        
-        
+        }
+
         return 1;
     }
 
@@ -113,10 +113,18 @@ public class Point implements Comparable<Point> {
         return new Comparator<Point>() {
             @Override
             public int compare(Point o1, Point o2) {
+                double s1 = o1.slopeTo(dis);
+                double s2 = o2.slopeTo(dis);
+
+                if (Objects.equals(s1, s2)
+                        || Math.abs(s1 - s2) < 0.000001) {
+                    return 0;
+                }
+
                 if (o1.slopeTo(dis) < o2.slopeTo(dis)) {
                     return -1;
                 }
-                
+
                 return 1;
             }
         };
@@ -143,15 +151,20 @@ public class Point implements Comparable<Point> {
         Point c = new Point(1, 2);
         Point d = new Point(1, 0);
         Point e = new Point(2, 2);
-        
+
         assert a.slopeTo(b) == 2;
         assert b.slopeTo(c) == Double.NEGATIVE_INFINITY;
-        assert c.slopeTo(d) == 0;
-        assert a.slopeTo(d) == Double.POSITIVE_INFINITY;
-        
+        assert c.slopeTo(d) == Double.POSITIVE_INFINITY;
+        assert a.slopeTo(d) == 0;
+
         assert b.compareTo(c) == 0;
         assert a.compareTo(b) < 0;
         assert c.compareTo(e) < 0;
         assert b.compareTo(a) > 0;
+
+        Point p = new Point(5, 1);
+        Point q = new Point(4, 1);
+        Point r = new Point(9, 1);
+        assert p.slopeOrder().compare(q, r) == 0;
     }
 }

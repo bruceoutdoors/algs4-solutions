@@ -31,25 +31,27 @@ public class FastCollinearPoints {
                 throw new java.lang.NullPointerException();
             }
         }
+        
+        Point[] pointsCopy = points.clone();
 
         ArrayList<LineSegment> segs = new ArrayList<>();
-        Quick.sort(points);
+        Quick.sort(pointsCopy);
 
         // all points must be unique:
-        for (int i = 0; i < points.length - 1; i++) {
-            if (points[i].compareTo(points[i + 1]) == 0) {
+        for (int i = 0; i < pointsCopy.length - 1; i++) {
+            if (pointsCopy[i].compareTo(pointsCopy[i + 1]) == 0) {
                 throw new java.lang.IllegalArgumentException();
             }
         }
 
         HashMap<Point, ArrayList<Double>> pointToSlopes = new HashMap<>();
 
-        for (int i = 0; i < points.length - 1; i++) {
-            Point origin = points[i];
+        for (int i = 0; i < pointsCopy.length - 1; i++) {
+            Point origin = pointsCopy[i];
             ArrayList<Point> pts = new ArrayList<>();
 
-            for (int j = i + 1; j < points.length; j++) {
-                pts.add(points[j]);
+            for (int j = i + 1; j < pointsCopy.length; j++) {
+                pts.add(pointsCopy[j]);
             }
 
             Point[] ptsArr = pts.toArray(new Point[pts.size()]);
@@ -110,7 +112,7 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() // the line segments
     {
-        return segmentsArr;
+        return segmentsArr.clone();
     }
 
     public static void main(String[] args) {
