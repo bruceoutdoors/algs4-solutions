@@ -31,7 +31,7 @@ public class FastCollinearPoints {
                 throw new java.lang.NullPointerException();
             }
         }
-        
+
         Point[] pointsCopy = points.clone();
 
         ArrayList<LineSegment> segs = new ArrayList<>();
@@ -43,7 +43,8 @@ public class FastCollinearPoints {
                 throw new java.lang.IllegalArgumentException();
             }
         }
-
+        // Hashmap used to solve maximal line. Can't use this because grader
+        // forbids use of hashcode()
         HashMap<Point, ArrayList<Double>> pointToSlopes = new HashMap<>();
 
         for (int i = 0; i < pointsCopy.length - 1; i++) {
@@ -84,6 +85,8 @@ public class FastCollinearPoints {
                 }
 
                 if (endPoint != null) {
+
+                    /* Can't be used since grader forbids use of hashcode()
                     // ensure that you only have the maximal line
                     if (pointToSlopes.containsKey(endPoint)) {
                         ArrayList<Double> slopes = pointToSlopes.get(endPoint);
@@ -96,7 +99,8 @@ public class FastCollinearPoints {
                         pointToSlopes.put(endPoint, new ArrayList<>());
                         pointToSlopes.get(endPoint).add(s1);
                     }
-
+                     */
+                    
                     segs.add(new LineSegment(origin, endPoint));
                 }
             }
