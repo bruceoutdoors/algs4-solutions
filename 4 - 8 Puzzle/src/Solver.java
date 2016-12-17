@@ -31,40 +31,38 @@ public class Solver {
         }
     }
 
-    private MinPQ<Node> pq;
-    private Stack<Board> solution;
+    private class StepSolver {
 
-    // find a solution to the initial board (using the A* algorithm)
-    public Solver(Board initial) {
-        if (initial == null) {
-            throw new java.lang.NullPointerException();
+        private MinPQ<Node> stepPQ;
+        public Stack<Board> stepSolution;
+
+        public StepSolver(Board initial) {
+            stepSolution = new Stack<>();
+            stepPQ = new MinPQ<>(new Comparator<Node>() {
+                @Override
+                public int compare(Node o1, Node o2) {
+                    return Integer.compare(o1.priority, o2.priority);
+                }
+            });
+
+            Node root = new Node(initial, 0);
+            stepPQ.insert(root);
         }
 
-        solution = new Stack<>();
-        pq = new MinPQ<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.priority, o2.priority);
-            }
-        });
-
-        Node root = new Node(initial, 0);
-        pq.insert(root);
-
-        while (!pq.isEmpty()) {
-            Node min = pq.delMin();
+        public Boolean step() {
+            Node min = stepPQ.delMin();
 
             // solution found:
             if (min.board.isGoal()) {
-                solution.push(min.board);
+                stepSolution.push(min.board);
 
                 Node parent = min.previous;
                 while (parent != null) {
-                    solution.push(parent.board);
+                    stepSolution.push(parent.board);
                     parent = parent.previous;
                 }
 
-                return;
+                return true;
             }
 
             Iterable<Board> neighbors = min.board.neighbors();
@@ -74,22 +72,56 @@ public class Solver {
                 if (min.previous != null && neighbor.equals(min.previous.board)) {
                     continue;
                 }
-                
+
                 Node nd = new Node(neighbor, min.moves + 1);
                 nd.previous = min;
-                
-                pq.insert(nd);
+
+                stepPQ.insert(nd);
+            }
+
+            return false;
+        }
+
+    }
+
+    private Stack<Board> solution;
+    private Boolean canSolve = true;
+
+    // find a solution to the initial board (using the A* algorithm)
+    public Solver(Board initial) {
+        if (initial == null) {
+            throw new java.lang.NullPointerException();
+        }
+
+        StepSolver original = new StepSolver(initial);
+        StepSolver twin = new StepSolver(initial.twin());
+        
+        while (true) {
+            Boolean isOriginalSolved = original.step();
+            
+            if (isOriginalSolved) {
+                solution = original.stepSolution;
+                break;
+            }
+            
+            Boolean isTwinSolved = twin.step();
+            
+            if (isTwinSolved) {
+                canSolve = false;
+                break;
             }
         }
     }
 
     // is the initial board solvable?
     public boolean isSolvable() {
-        return true;
+        return canSolve;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
+        if (!canSolve) return -1;
+        
         return solution.size() - 1;
     }
 

@@ -12,7 +12,7 @@ If you intend to use Netbeans as well, I recommend installing the [checkstyle](h
  2. Randomized Queues and Deques (Queue and Stack) - Score: **99%**
  3. Pattern Recognition (Sort) - Score: **94%**
   - Solution contains subsegment of a segment in reference solution. I did solved that, but used `HashMap` which got disqualified (cannot use `hashcode()`); for that reason that code block is commented out.
- 4. 8 Puzzle (Priority Queues) - _not completed_
+ 4. 8 Puzzle (Priority Queues) - **90%**
  5. Kd-Tree (Balanced Search Trees) - _not completed_
 
 ## Part II

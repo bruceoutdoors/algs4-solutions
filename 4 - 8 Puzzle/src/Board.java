@@ -13,13 +13,13 @@ import edu.princeton.cs.algs4.LinkedStack;
  */
 public class Board {
 
-    final int n;
-    final int[][] tiles;
-    final int[][] goal;
+    final private int n;
+    final private int[][] tiles;
+    final private int[][] goal;
 
-    final int manhatt;
-    final int hamm;
-    final Boolean isgoal;
+    final private int manhatt;
+    final private int hamm;
+    final private Boolean isgoal;
 
     // construct a board from an n-by-n array of blocks
     // (where blocks[i][j] = block in row i, column j)
