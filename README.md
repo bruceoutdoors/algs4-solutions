@@ -13,7 +13,7 @@ If you intend to use Netbeans as well, I recommend installing the [checkstyle](h
  3. Pattern Recognition (Sort) - Score: **94%**
   - Solution contains subsegment of a segment in reference solution. I did solved that, but used `HashMap` which got disqualified (cannot use `hashcode()`); for that reason that code block is commented out.
  4. 8 Puzzle (Priority Queues) - **90%**
- 5. Kd-Tree (Balanced Search Trees) - **79%**
+ 5. Kd-Tree (Balanced Search Trees) - **86%**
 
 ## Part II
  6. WordNet - _not completed_

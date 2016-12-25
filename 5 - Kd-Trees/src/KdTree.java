@@ -46,9 +46,8 @@ public class KdTree {
             throw new java.lang.NullPointerException();
         }
 
-        size++;
-
         if (root == null) {
+            ++size;
             root = new Node();
             root.p = p;
             root.rect = new RectHV(0, 0, 1, 1);
@@ -56,8 +55,11 @@ public class KdTree {
             return;
         }
 
-        appendToNode(root, p);
-
+        // don't add duplicate points
+        if (!contains(p)) {
+            appendToNode(root, p);
+            ++size;
+        }
     }
 
     private void appendToNode(Node nd, Point2D p) {
