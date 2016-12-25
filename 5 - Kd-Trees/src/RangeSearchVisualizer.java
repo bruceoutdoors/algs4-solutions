@@ -16,6 +16,7 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 
 public class RangeSearchVisualizer {
 
@@ -29,11 +30,18 @@ public class RangeSearchVisualizer {
         // initialize the data structures with N points from standard input
         PointSET brute = new PointSET();
         KdTree kdtree = new KdTree();
+        
+        int i = 0;
         while (!in.isEmpty()) {
             double x = in.readDouble();
             double y = in.readDouble();
             Point2D p = new Point2D(x, y);
             kdtree.insert(p);
+            StdOut.println(p);
+            
+            assert kdtree.size() == ++i;
+            assert kdtree.contains(p);
+            
             brute.insert(p);
         }
 
@@ -87,13 +95,17 @@ public class RangeSearchVisualizer {
             // draw the range search results for brute-force data structure in red
             StdDraw.setPenRadius(0.03);
             StdDraw.setPenColor(StdDraw.RED);
-            for (Point2D p : brute.range(rect))
+            
+            Iterable<Point2D> bruteRange = brute.range(rect);
+            for (Point2D p : bruteRange)
                 p.draw();
 
             // draw the range search results for kd-tree in blue
             StdDraw.setPenRadius(.02);
             StdDraw.setPenColor(StdDraw.BLUE);
-            for (Point2D p : kdtree.range(rect))
+            
+            Iterable<Point2D> kdtreeRange = kdtree.range(rect);
+            for (Point2D p : kdtreeRange)
                 p.draw();
 
             StdDraw.show();

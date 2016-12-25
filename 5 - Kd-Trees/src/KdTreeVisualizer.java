@@ -37,6 +37,8 @@ public class KdTreeVisualizer {
                 kdtree.draw();
                 StdDraw.show();
             }
+            
+            StdOut.println(kdtree.size());
         }
 
         while (true) {

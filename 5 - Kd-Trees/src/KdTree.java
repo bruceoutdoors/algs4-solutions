@@ -128,13 +128,35 @@ public class KdTree {
     }
 
     private boolean contains(Node nd, Point2D p) {
+        if (nd == null) {
+            return false;
+        }
+
         if (nd.p.equals(p)) {
             return true;
-        } else if (contains(nd.lb, p)) {
-            return true;
-        } else {
-            return contains(nd.rt, p);
         }
+
+        double diff = -1;
+        if (nd.orientation == Node.VERTICAL) {
+            // check point to left or right:
+            diff = p.x() - nd.p.x();
+        } else {
+            // check point to top or bottom:
+            diff = p.y() - nd.p.y();
+        }
+
+        if (diff >= 0) { // top
+            if (nd.rt != null && contains(nd.rt, p)) {
+                return true;
+            }
+        } else // bottom
+        {
+            if (nd.lb != null && contains(nd.lb, p)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // draw all points to standard draw
@@ -222,7 +244,7 @@ public class KdTree {
                 // further from minimum distance
                 return champion;
             }
-            
+
             Point2D chp = champion;
             double mdist = minDist;
             double dist = nd.p.distanceSquaredTo(p);
